@@ -1,0 +1,57 @@
+.mat-form-field {
+    margin: 20px 0;
+    width: 450px !important;
+}
+
+.clearBg{
+    height: auto !important;
+    background: transparent;
+}
+
+.margin {
+    margin-bottom: 20px;
+}
+
+.text-center {
+    text-align: center;
+    margin:auto;
+}
+
+.fileBtn {
+    width: 200px;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+#uploadFile {
+    top: 0px;
+    left: 0px;
+    width: 100%;    
+    z-index: 9;
+    opacity: 0;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+}
+
+table {
+    width: 100%;
+  }
+  
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
+

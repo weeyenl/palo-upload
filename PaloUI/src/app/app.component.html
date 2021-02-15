@@ -1,0 +1,152 @@
+<mat-toolbar>
+  <span>PALO Orders Application</span>
+</mat-toolbar>
+
+<div class='text-center'>
+  <mat-form-field>
+    <div>
+      <mat-toolbar class='clearBg'>
+        <!-- Display files names -->
+        <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+
+        <!-- Browse Button -->
+        <button mat-flat-button color="primary" class='fileBtn'>
+          Browse File
+        </button>
+      </mat-toolbar>
+
+      <!-- Fetch selected filed on change -->
+      <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" accept=".csv" [disabled]='isLoadingResults'/>
+    </div>
+  </mat-form-field>
+
+
+</div>
+
+<mat-toolbar class='clearBg margin'>
+  <mat-toolbar-row class='text-center'>
+    <!-- Display files names -->
+    <button mat-flat-button color="primary" class='text-center fileBtn' [disabled]='!selectedFile' (click)='upload()'>
+      Upload
+    </button>
+
+  </mat-toolbar-row>
+  <span class="text-center" *ngIf='uploadInProgress'>
+    Uploading..
+  </span>
+  <mat-toolbar-row class='text-center' *ngIf='uploadInProgress'>
+    
+    
+    <mat-progress-spinner  class="text-center" color="primary" mode="indeterminate" *ngIf='isLoadingResults'>
+    </mat-progress-spinner>
+
+  </mat-toolbar-row>
+
+
+</mat-toolbar>
+
+<mat-toolbar class='clearBg margin'>
+
+  <span class="text-center" [innerHTML]='responseMsg'>
+  </span>
+
+
+
+</mat-toolbar>
+
+
+
+
+
+
+<div class="mat-elevation-z8">
+  <div class="loader"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Region </th>
+      <td mat-cell *matCellDef="let row"> {{row.region}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+      <td mat-cell *matCellDef="let row"> {{row.country}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="itemType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Item Type </th>
+      <td mat-cell *matCellDef="let row"> {{row.itemType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="salesChannel">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Sales Channel </th>
+      <td mat-cell *matCellDef="let row"> {{row.salesChannel}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderPriority">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Priority </th>
+      <td mat-cell *matCellDef="let row"> {{row.orderPriority}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </th>
+      <td mat-cell *matCellDef="let row"> {{row.orderDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.orderID}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="shipDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ship Date </th>
+      <td mat-cell *matCellDef="let row"> {{row.shipDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unitsSold">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Units Sold </th>
+      <td mat-cell *matCellDef="let row"> {{row.unitsSold}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unitPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit Price </th>
+      <td mat-cell *matCellDef="let row"> {{row.unitPrice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unitCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit Cost </th>
+      <td mat-cell *matCellDef="let row"> {{row.unitCost}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalRevenue">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Revenue </th>
+      <td mat-cell *matCellDef="let row"> {{row.totalRevenue}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalCost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Cost </th>
+      <td mat-cell *matCellDef="let row"> {{row.totalCost}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalProfit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Profit </th>
+      <td mat-cell *matCellDef="let row"> {{row.totalProfit}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nric">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> NRIC </th>
+      <td mat-cell *matCellDef="let row"> {{row.nric}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
+</div>
