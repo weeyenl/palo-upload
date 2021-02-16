@@ -42,13 +42,15 @@ public class UploadService {
 		List<TbPaloOrder> resultList = (List<TbPaloOrder>)resultMap.get("resultList");
 		Integer failedCount = (Integer) resultMap.get("failedCount");
 		Integer totalCount = (Integer) resultMap.get("totalCount");
+		Integer failNricCount = (Integer) resultMap.get("failNricCount");
 		
 		tbPaloOrderRepository.saveAll(resultList);
 		
 		StringBuilder sb = new StringBuilder("");
 		sb.append("Total number of records: " + totalCount + "<br>");
 		sb.append("Number of records processed: " + resultList.size() + "<br>");
-		sb.append("Number of records failed: " + failedCount + "<br>");
+		sb.append("Number of records failed (Validation): " + failedCount + "<br>");
+		sb.append("Number of records failed (Nric): " + failNricCount + "<br>");
 		
 		return sb.toString();
 	}

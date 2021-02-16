@@ -11,7 +11,7 @@
 	<groupId>com.ianlau</groupId>
 	<artifactId>paloupload</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>paloupload</name>
 	<description>Palo IT Order CSV</description>
 	<properties>

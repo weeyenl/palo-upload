@@ -29,4 +29,42 @@ public class NRICTest {
 		
 		
 	}	
+	
+	@Test
+	public void testNricGenerator() {
+		String randomUin;
+		
+		final String prefixes = "STFG";
+		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		
+		// Test 500, 000 records
+		for(int i = 0; i < 500000; i++) {
+			randomUin = NRICGenerator.generateRandomUin();
+			assertThat(randomUin.length()).isEqualTo(9);
+			assertThat(prefixes.indexOf(randomUin.charAt(0))).isGreaterThan(-1);
+			
+			assertThat(alphabet.indexOf(randomUin.charAt(randomUin.length()-1))).isGreaterThan(-1);
+		}
+
+	}	
+	
+	@Test
+	public void testNricGeneratorAndValidator() {
+		String randomUin;
+		
+		int passCount = 0;
+		
+		// Test 500, 000 records
+		for(int i = 0; i < 500000; i++) {
+			randomUin = NRICGenerator.generateRandomUin();
+			if(NRICValidator.chkNRIC(randomUin)) {
+				passCount++;
+			}
+		}
+		
+		System.out.println(passCount);
+		
+		assertThat(passCount).isGreaterThan(10000);
+
+	}	
 }

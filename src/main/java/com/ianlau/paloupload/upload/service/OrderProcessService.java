@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ianlau.paloupload.upload.model.TbPaloOrder;
+import com.ianlau.paloupload.util.NRICGenerator;
+import com.ianlau.paloupload.util.NRICValidator;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
@@ -27,7 +29,7 @@ public class OrderProcessService {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		List<TbPaloOrder> orderList = new ArrayList<>();
-		Integer totalCount = 0,  failCount = 0;
+		Integer totalCount = 0,  failCount = 0, failNricCount = 0;
 		
 		boolean skipLine = false;
 		
@@ -56,8 +58,15 @@ public class OrderProcessService {
     	  
     	  if(!skipLine) {
     		  TbPaloOrder newOrder = new TbPaloOrder(lineInArray);
-    		  newOrder.setNric("123");
-    		  orderList.add(newOrder);
+    		  newOrder.setNric(NRICGenerator.generateRandomUin());
+    		  
+    		  if(NRICValidator.chkNRIC(newOrder.getNric())) {
+    			  orderList.add(newOrder);
+    		  }
+    		  else {
+    			  failNricCount++;
+    		  }
+    		  
     	  }
           
         }
@@ -66,6 +75,7 @@ public class OrderProcessService {
 		
 		resultMap.put("resultList", orderList);
 		resultMap.put("failedCount", failCount);
+		resultMap.put("failNricCount", failNricCount);
 		resultMap.put("totalCount", totalCount);
 		return resultMap;
 	}}
