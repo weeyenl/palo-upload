@@ -27,4 +27,4 @@ This application uses H2 Spring In Memory Database due to time constraint. This 
 
 If you have GC Overhead Limit exceeded, please increase the JVM memory of your container to support this.
 
-If there is time, I will change the database to Postgres to improve the performance and memory.
+If there is time, I will change the database to other (Postgre, Oracle) to improve the performance and memory.
