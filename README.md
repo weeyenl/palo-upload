@@ -19,6 +19,8 @@ mvn clean install spring-boot:run
 
 The URL to access will be: http://localhost:8080
 
+Sample file to upload can be found at src\main\resources\csv
+
 ## Support
 
 This application uses H2 Spring In Memory Database due to time constraint. This might cause slight performance issues and memory usage issues when adding a large number of records, therefore I have limited the file upload size to be 100MB.
