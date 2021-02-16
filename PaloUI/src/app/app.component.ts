@@ -57,11 +57,6 @@ export class AppComponent {
   responseMsg;
 
   constructor(private uploadService: UploadService, private dataService: DataService) {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
   }
 
   // ngAfterViewInit() {
@@ -96,7 +91,7 @@ export class AppComponent {
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
+
           return observableOf([]);
         })
       ).subscribe(data => this.dataSource = data);
@@ -113,7 +108,7 @@ export class AppComponent {
 
 
       this.selectedFile = imgFile.target.files[0];
-      // Reset if duplicate image uploaded again
+
       this.fileInput.nativeElement.value = "";
     } else {
       this.fileAttr = 'Choose File';
@@ -144,21 +139,10 @@ export class AppComponent {
     },
       error => {
         this.isLoadingResults = false;
-        alert("Error uploading file.");
+        alert("Error uploading file. Please upload a CSV file with the correct format.");
       },
     );
   }
 
 }
 
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-}

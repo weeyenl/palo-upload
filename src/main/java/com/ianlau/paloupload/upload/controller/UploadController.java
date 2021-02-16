@@ -20,6 +20,14 @@ public class UploadController {
 	@PostMapping("/upload")
 	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
 	    String message = "";
+	    String[] fileFrags = file.getOriginalFilename().split("\\.");
+	    String extension = fileFrags[fileFrags.length-1];
+	    
+	    if(!"CSV".equalsIgnoreCase(extension)) {
+	    	return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+	    }
+
+	    
 	    try {
 	      message = uploadService.processOrder(file);
 

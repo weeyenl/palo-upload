@@ -23,6 +23,8 @@ import com.opencsv.exceptions.CsvValidationException;
 @Service
 public class OrderProcessService {
 
+	private final String[] headers = {"Region","Country","Item Type","Sales Channel","Order Priority","Order Date","Order ID","Ship Date","Units Sold","Unit Price","Unit Cost","Total Revenue","Total Cost","Total Profit"};
+	
 	Logger logger = LoggerFactory.getLogger(OrderProcessService.class);
 	
 	public Map<String, Object> processUploadedFile(MultipartFile file) throws FileNotFoundException, IOException, CsvValidationException{
@@ -33,10 +35,23 @@ public class OrderProcessService {
 		
 		boolean skipLine = false;
 		
-		CSVReader reader = new CSVReaderBuilder(new InputStreamReader(file.getInputStream())).withSkipLines(1).build();
+		CSVReader reader = new CSVReaderBuilder(new InputStreamReader(file.getInputStream())).build();
 				
         String[] lineInArray;
+        
+        int lineNum = 0;
+        
         while ((lineInArray = reader.readNext()) != null) {
+          if(lineNum == 0) {
+        	  for(int i = 0; i < lineInArray.length; i++) {
+        		  if(i > headers.length-1 || lineInArray[i] == null || !lineInArray[i].equals(headers[i])) {
+        			  throw new CsvValidationException("Invalid format");
+        		  }
+        	  }
+        	  lineNum++;
+        	  continue;
+          }
+          
     	  skipLine = false;
     	  totalCount++;
     	  
