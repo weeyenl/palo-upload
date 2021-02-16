@@ -26,3 +26,5 @@ Sample file to upload can be found at src\main\resources\csv
 This application uses H2 Spring In Memory Database due to time constraint. This might cause slight performance issues and memory usage issues when adding a large number of records, therefore I have limited the file upload size to be 100MB.
 
 If you have GC Overhead Limit exceeded, please increase the JVM memory of your container to support this.
+
+If there is time, I will change the database to Postgres to improve the performance and memory.
